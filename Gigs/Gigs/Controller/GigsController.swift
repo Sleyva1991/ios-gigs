@@ -62,57 +62,57 @@ class GigsController {
             }
             completion(nil)
             }.resume()
+
+    }
+    
+    // Create function for sign in
+    
+    func signIn(with user: User, completion: @escaping (Error?) -> Void) {
         
+        let requestURL = baseURL
+            .appendingPathComponent("users")
+            .appendingPathComponent("login")
         
-        // Create function for sign in
+        var request = URLRequest(url: requestURL)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = HTTPMethod.post.rawValue
         
-        func signIn(with user: User, completion: @escaping (Error?) -> Void) {
+        do {
+            request.httpBody = try JSONEncoder().encode(user)
+        } catch {
+            NSLog("Error encoding user for sign in: \(error)")
+            completion(error)
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             
-            let requestURL = baseURL
-                .appendingPathComponent("users")
-                .appendingPathComponent("login")
+            if let error = error {
+                NSLog("Error signing in user: \(error)")
+                completion(error)
+                return
+            }
             
-            var request = URLRequest(url: requestURL)
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpMethod = HTTPMethod.post.rawValue
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                let statusCodeError = NSError(domain: "", code: response.statusCode, userInfo: nil)
+                completion(statusCodeError)
+            }
+            guard let data = data else {
+                NSLog("No data return from data task")
+                let noDataError = NSError(domain: "", code: -1, userInfo: nil)
+                completion(noDataError)
+                return
+            }
             
             do {
-                request.httpBody = try JSONEncoder().encode(user)
+                let bearer = try JSONDecoder().decode(Bearer.self, from: data)
+                self.bearer = bearer
             } catch {
-                NSLog("Error encoding user for sign in: \(error)")
+                NSLog("Error decoding the bear token: \(error)")
                 completion(error)
             }
             
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                
-                if let error = error {
-                    NSLog("Error signing in user: \(error)")
-                    completion(error)
-                    return
-                }
-                
-                if let response = response as? HTTPURLResponse,
-                    response.statusCode != 200 {
-                    let statusCodeError = NSError(domain: "", code: response.statusCode, userInfo: nil)
-                    completion(statusCodeError)
-                }
-                guard let data = data else {
-                    NSLog("No data return from data task")
-                    let noDataError = NSError(domain: "", code: -1, userInfo: nil)
-                    completion(noDataError)
-                    return
-                }
-                
-                do {
-                    let bearer = try JSONDecoder().decode(Bearer.self, from: data)
-                    self.bearer = bearer
-                } catch {
-                    NSLog("Error decoding the bear token: \(error)")
-                    completion(error)
-                }
-                
-                completion(nil)
+            completion(nil)
             }.resume()
-        }
     }
 }

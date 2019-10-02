@@ -29,6 +29,10 @@ class LoginViewController: UIViewController {
         loginButton.backgroundColor = UIColor(hue: 190/360, saturation: 70/100, brightness: 80/100, alpha: 1.0)
         loginButton.tintColor = .white
         loginButton.layer.cornerRadius = 8.0
+        
+        segmentedController.backgroundColor = UIColor(hue: 190/360, saturation: 70/100, brightness: 80/100, alpha: 1.0)
+        segmentedController.tintColor = .white
+        segmentedController.layer.cornerRadius = 8.0
     }
     
     @IBAction func segmentedContollerTapped(_ sender: UISegmentedControl) {
@@ -64,8 +68,32 @@ class LoginViewController: UIViewController {
         
     }
     
+    func signIn(with user: User) {
+        gigsController?.signIn(with: user, completion: { (error) in
+            if let error = error {
+                NSLog("Error occurred during sign in: \(error)")
+            } else {
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        })
+    }
+    
     @IBAction func loginButtonTapped(_ sender: Any) {
+        guard let username = usernameTextfield.text,
+            let password = passwordTextfield.text,
+            !username.isEmpty,
+            !password.isEmpty else { return }
         
+        let user = User(username: username, password: password)
+        
+        // perform login or sign up operation based on loginType
+        if loginType == .signUp {
+            signUp(with: user)
+        } else {
+            signIn(with: user)
+        }
         
     }
     

@@ -20,6 +20,7 @@ class GigsTableViewController: UITableViewController {
        super.viewDidAppear(animated)
         if gigController.bearer == nil {
             // TODO: fetch gigs here
+            performSegue(withIdentifier: "LoginViewModalSegue", sender: self)
             
         }
     }
@@ -73,14 +74,14 @@ class GigsTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "LoginViewModalSegue" {
+            if let loginVC = segue.destination as? LoginViewController {
+                loginVC.gigsController = gigController
+            }
+        }
     }
-    */
 
 }

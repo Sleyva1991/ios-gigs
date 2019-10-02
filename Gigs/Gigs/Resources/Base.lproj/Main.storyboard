@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fwR-jm-w02">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fwR-jm-w02">
                                 <rect key="frame" x="147" y="74" width="121" height="29"/>
                                 <segments>
                                     <segment title="First"/>
@@ -55,10 +55,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Vz8-hI-ltz" firstAttribute="trailing" secondItem="fwR-jm-w02" secondAttribute="trailing" constant="146" id="NL8-x3-v7b"/>
                             <constraint firstItem="ofP-s4-AOI" firstAttribute="top" secondItem="fwR-jm-w02" secondAttribute="bottom" constant="10" id="Qyv-E2-nCL"/>
                             <constraint firstItem="ofP-s4-AOI" firstAttribute="leading" secondItem="Vz8-hI-ltz" secondAttribute="leading" constant="20" id="YK1-BY-sUS"/>
                             <constraint firstItem="fwR-jm-w02" firstAttribute="top" secondItem="Vz8-hI-ltz" secondAttribute="top" constant="30" id="fn3-ub-Sxk"/>
                             <constraint firstItem="Vz8-hI-ltz" firstAttribute="trailing" secondItem="ofP-s4-AOI" secondAttribute="trailing" constant="20" id="jdh-Nl-VFD"/>
+                            <constraint firstItem="fwR-jm-w02" firstAttribute="leading" secondItem="Vz8-hI-ltz" secondAttribute="leading" constant="147" id="zLH-cW-IKm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Vz8-hI-ltz"/>
                     </view>
@@ -114,7 +116,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="d4D-nD-Zni"/>
                     <connections>
-                        <segue destination="BoP-ez-5bE" kind="modal" id="njc-aO-G6O"/>
+                        <segue destination="BoP-ez-5bE" kind="modal" identifier="LoginViewModalSegue" id="njc-aO-G6O"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g5w-cU-kuU" userLabel="First Responder" sceneMemberID="firstResponder"/>
