@@ -8,15 +8,57 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+enum LoginType {
+    case signIn
+    case signUp
+}
 
+class LoginViewController: UIViewController {
+    
+    var gigsController: GigsController!
+    var loginType = LoginType.signUp
+    
+    @IBOutlet weak var segmentedController: UISegmentedControl!
+    @IBOutlet weak var usernameTextfield: UITextField!
+    @IBOutlet weak var passwordTextfield: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        loginButton.backgroundColor = UIColor(hue: 190/360, saturation: 70/100, brightness: 80/100, alpha: 1.0)
+        loginButton.tintColor = .white
+        loginButton.layer.cornerRadius = 8.0
     }
     
-
+    @IBAction func segmentedContollerTapped(_ sender: UISegmentedControl) {
+        
+        if sender.selectedSegmentIndex == 0 {
+            loginType = .signUp
+            loginButton.setTitle("Sign Up", for: .normal)
+        } else {
+            loginType = .signIn
+            loginButton.setTitle("Sign In", for: .normal)
+        }
+    }
+    
+    func signUp(with user: User){
+        // Create the user
+        gigsController?.signUp(with: user, completion: { (error) in
+            if let error = error {
+                NSLog("Error occurred during sign up: \(error)")
+            } else {
+                let alert = UIAlertController(title: "Sign up Successful", message: "Now please log in", preferredStyle: .alert)
+            }
+        })
+        
+    }
+    
+    @IBAction func loginButtonTapped(_ sender: Any) {
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
