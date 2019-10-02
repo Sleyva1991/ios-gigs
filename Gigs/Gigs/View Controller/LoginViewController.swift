@@ -49,6 +49,16 @@ class LoginViewController: UIViewController {
                 NSLog("Error occurred during sign up: \(error)")
             } else {
                 let alert = UIAlertController(title: "Sign up Successful", message: "Now please log in", preferredStyle: .alert)
+                
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                
+                alert.addAction(okAction)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                    self.loginType = .signIn
+                    self.segmentedController.selectedSegmentIndex = 1
+                    self.loginButton.setTitle("Sign In", for: .normal)
+                }
             }
         })
         
